@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 10%; /* #1A1A1A */
+    --foreground: 0 0% 100%;
+    --card: 0 0% 12%; /* #1F1F1F */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 15 85% 60%; /* #FF6B35 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 207 90% 61%; /* #4A90E2 */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 15 85% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 15 85% 60%;
+    --chart-1: 15 85% 60%;
+    --chart-2: 207 90% 61%;
+    --chart-3: 48 96% 89%;
+    --chart-4: 25 95% 53%;
+    --chart-5: 10 81% 59%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 15 85% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 15 85% 60%;
+    
+    /* Custom mining colors */
+    --mining-orange: 15 85% 60%; /* #FF6B35 */
+    --mining-blue: 207 90% 61%; /* #4A90E2 */
+    --mining-dark: 0 0% 6%; /* #0F0F0F */
+    --mining-gray: 0 0% 25%; /* #404040 */
+    --mining-success: 120 100% 25%; /* Green for active equipment */
+    --mining-warning: 45 100% 50%; /* Yellow for maintenance */
+    --mining-danger: 0 100% 50%; /* Red for offline */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+
+    font-family: Inter, sans-serif;
+  }
+}
+
+@layer components {
+  .mining-panel {
+    @apply bg-card border border-border rounded-lg;
+  }
+  
+  .equipment-card {
+    @apply bg-card border border-border rounded-md p-3 hover:bg-accent/10 transition-colors cursor-pointer;
+  }
+  
+  .status-active {
+    @apply bg-green-500/20 text-green-400 border-green-500/30;
+  }
+  
+  .status-idle {
+    @apply bg-yellow-500/20 text-yellow-400 border-yellow-500/30;
+  }
+  
+  .status-maintenance {
+    @apply bg-red-500/20 text-red-400 border-red-500/30;
+  }
+  
+  .metric-card {
+    @apply bg-gradient-to-br from-card to-muted/20 border border-border rounded-lg p-4;
+  }
+}
