@@ -12,6 +12,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { toast } from 'sonner'
 import { Toaster } from './components/ui/sonner'
 import { blink } from './blink/client'
+import { MaintenanceScheduler } from './components/MaintenanceScheduler'
+import { AnalyticsDashboard } from './components/AnalyticsDashboard'
+import { RouteOptimizer } from './components/RouteOptimizer'
 import { 
   Truck, 
   Pickaxe, 
@@ -73,6 +76,7 @@ function App() {
   const [assignments, setAssignments] = useState<Assignment[]>([])
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null)
   const [activeTab, setActiveTab] = useState('overview')
+  const [activeView, setActiveView] = useState('dispatch')
   const [draggedItem, setDraggedItem] = useState<Equipment | null>(null)
   const [isCreateAssignmentOpen, setIsCreateAssignmentOpen] = useState(false)
   const [productionMetrics, setProductionMetrics] = useState<ProductionMetrics>({
@@ -381,7 +385,49 @@ function App() {
           </div>
         </header>
 
-        <div className="flex h-[calc(100vh-73px)]">
+        {/* Navigation Tabs */}
+        <div className="border-b border-border bg-card/30">
+          <div className="flex items-center px-6 py-2">
+            <Button 
+              variant={activeView === 'dispatch' ? 'default' : 'ghost'} 
+              size="sm"
+              onClick={() => setActiveView('dispatch')}
+              className="mr-2"
+            >
+              <MapPin className="h-4 w-4 mr-2" />
+              Dispatch Control
+            </Button>
+            <Button 
+              variant={activeView === 'maintenance' ? 'default' : 'ghost'} 
+              size="sm"
+              onClick={() => setActiveView('maintenance')}
+              className="mr-2"
+            >
+              <Wrench className="h-4 w-4 mr-2" />
+              Maintenance
+            </Button>
+            <Button 
+              variant={activeView === 'routes' ? 'default' : 'ghost'} 
+              size="sm"
+              onClick={() => setActiveView('routes')}
+              className="mr-2"
+            >
+              <Truck className="h-4 w-4 mr-2" />
+              Route Optimizer
+            </Button>
+            <Button 
+              variant={activeView === 'analytics' ? 'default' : 'ghost'} 
+              size="sm"
+              onClick={() => setActiveView('analytics')}
+            >
+              <BarChart3 className="h-4 w-4 mr-2" />
+              Analytics
+            </Button>
+          </div>
+        </div>
+
+        {activeView === 'dispatch' && (
+          <div className="flex h-[calc(100vh-113px)]">
           {/* Left Sidebar - Equipment Lists */}
           <div className="w-80 border-r border-border bg-card/30 overflow-y-auto">
             <div className="p-4">
@@ -691,6 +737,7 @@ function App() {
             </div>
           </div>
         </div>
+        )}
 
         <DragOverlay>
           {draggedItem && (
@@ -702,6 +749,36 @@ function App() {
             </div>
           )}
         </DragOverlay>
+        {/* Maintenance View */}
+        {activeView === 'maintenance' && (
+          <div className="p-6">
+            <MaintenanceScheduler 
+              equipment={equipment}
+              onEquipmentUpdate={loadEquipment}
+            />
+          </div>
+        )}
+
+        {/* Route Optimizer View */}
+        {activeView === 'routes' && (
+          <div className="p-6">
+            <RouteOptimizer 
+              equipment={equipment}
+              onRouteUpdate={loadEquipment}
+            />
+          </div>
+        )}
+
+        {/* Analytics View */}
+        {activeView === 'analytics' && (
+          <div className="p-6">
+            <AnalyticsDashboard 
+              equipment={equipment}
+              assignments={assignments}
+            />
+          </div>
+        )}
+
         <Toaster />
       </div>
     </DndContext>
